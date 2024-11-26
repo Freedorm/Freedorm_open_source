@@ -74,48 +74,67 @@ TODO
 通过执行刷卡动作，逻辑分析仪得到[一些数据]()，命名规则为`data_刷卡类型_对应反馈`。
 
 刷卡类型有：
-1. `admin`：宿管卡
-2. `user`：本宿舍住户校园卡
-3. `stranger`：陌生人校园卡
-4. `touch_num`：点击门锁面板密码键盘数字键
-5. `touch_ok`：点击门锁面板密码键盘确认键
+1. **`admin`：宿管卡**
+2. **`user`：本宿舍住户校园卡**
+3. **`stranger`：陌生人校园卡**
+4. **`touch_num`：点击门锁面板密码键盘数字键**
+5. **`touch_ok`：点击门锁面板密码键盘确认键**
 6. `blank`：空白UFUID-IC卡
 7. `miband9`：小米手环9模拟IC卡
-8. `D1`: 短接D1和GND
-9. `D0`: 短接D0和GND
-10. `LED`: 短接LED和GND
-11. `LOCK`: 短接LOCK和GND
-12. `D1&user`: 短接D1和GND，刷本宿舍住户校园卡
+8. **`D1`: 短接D1和GND**
+9. **`D0`: 短接D0和GND**
+10. **`LED`: 短接LED和GND**
+11. **`LOCK`: 短接LOCK和GND**
+12. **`D1&user`: 短接D1和GND，刷本宿舍住户校园卡**
 13. `D0&user`: 短接D0和GND，刷本宿舍住户校园卡
 14. `LED&user`: 短接LED和GND，刷本宿舍住户校园卡
 15. `LOCK&user`: 短接LOCK和GND，刷本宿舍住户校园卡
+16. **`D1&admin`: 短接D1和GND，刷宿管卡**
+17. **`D0&admin`: 短接D0和GND，刷宿管卡**
 
 对应反馈有：
 1. `success`：门打开
 2. `fail`：门不打开
 3. `blank`：没有反馈，门不打开
+4. `lock`：门锁上了，刷卡刷不开
 
-通过实验，得到每种刷卡类型的对应反馈，如下表所示：
-| 刷卡类型    | 门锁         | 面板LED    | 蜂鸣器 | 反馈类型 |
-| ----------- | ------------ | ---------- | ------ | -------- |
-| admin       |              |            |        | success  |
-| user        | 开           | 持续6s绿色 | 默     | success  |
-| stranger    | 不开         | 红色闪烁3s | 长滴声 | fail     |
-| touch_num   | 不开         | 无反应     | 短滴声 | blank    |
-| touch_ok    | 不开         | 绿色闪烁5s | 默     | fail     |
-| blank       | 不开         | 无反应     | 默     | blank    |
-| miband9     | 不开         | 无反应     | 默     | blank    |
-| D1          | 不开         |            |        | blank    |
-| D0          | 不开         |            |        | blank    |
-| LED         | 不开         |            |        | blank    |
-| **LOCK**    | **开**       | 保持蓝色   | 默     | blank    |
-| **D1&user** | **不开**     | 保持绿色   |        | fail     |
-| D0&user     | 不开         |            |        | fail     |
-| LED&user    | 开           | 持续6s绿色 | 默     | success  |
-| LOCK&user   | 本来就是开的 |            |        | blank    |
+通过实验，得到每种刷卡类型的对应反馈表，如下表所示：
+| 刷卡类型      | 门锁           | 面板LED                  | 蜂鸣器   | 反馈类型 |
+| ------------- | -------------- | ------------------------ | -------- | -------- |
+| **admin**     |                |                          |          |          |
+| **user**      | 开，6s后锁上   | 持续6s绿色               | 长滴一声 | success  |
+| **stranger**  | 不开           | 红色闪烁3s               | 长滴一声 | fail     |
+| **touch_num** | 不开           | 无反应                   | 短滴一声 | blank    |
+| **touch_ok**  | 不开           | 绿色闪烁5s               | 默       | fail     |
+| blank         | 不开           | 无反应                   | 默       | blank    |
+| miband9       | 不开           | 无反应                   | 默       | blank    |
+| D1            | 不开           | 保持蓝色                 | 默       | blank    |
+| D0            | 不开           | 保持蓝色                 | 默       | blank    |
+| LED           | 不开           | 蓝色变成绿色，并保持绿色 | 默       | blank    |
+| **LOCK**      | **常开**       | 保持蓝色                 | 默       | success  |
+| **D1&user**   | **不开**       | 绿色闪烁一下，1s         | 长滴一声 | lock     |
+| **D0&user**   | **不开**       | 绿色闪烁一下，1s         | 长滴一声 | lock     |
+| LED&user      | 开，6s后锁上   | 持续6s绿色               | 长滴一声 | blank    |
+| LOCK&user     | 本来就是常开的 | 持续6s绿色               | 长滴一声 | success  |
+| **D1&admin**  |                |                          |          |          |
+| **D0&admin**  |                |                          |          |          |
 
-因此得到了9种刷卡后的逻辑分析仪数据。每个数据一个动作；4个通道，对应D1、D0、LED、LOCK。储存在[data文件夹下](/reverse_engineering/data)。
+有太多种可能的刷卡动作，因此选取了感兴趣的11个刷卡动作，用逻辑分析仪获取数据。
+每个数据对应一个动作；有4个通道，对应D1、D0、LED、LOCK。储存在[data文件夹下](/reverse_engineering/data)。
 
+data_admin_
+data_user_success
+data_stranger_fail
+data_touch_num_blank
+data_touch_ok_fail
+data_D1_blank
+data_D0_blank
+data_LED_blank
+data_LOCK_success
+data_D1&user_lock
+data_D0&user_lock
+data_D1&admin_
+data_D0&admin_
 
 ## 实验数据分析
 
