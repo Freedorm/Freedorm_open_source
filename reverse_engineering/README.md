@@ -1,5 +1,5 @@
 # 信号线逆向工程实验
-> 说是为了记录下来，便于后人进一步研究。
+> 记录下来说是便于后人进一步研究。
 
 - [信号线逆向工程实验](#信号线逆向工程实验)
   - [实验目的](#实验目的)
@@ -74,7 +74,7 @@ TODO
 
 通过执行刷卡动作，逻辑分析仪得到[一些数据]()，命名规则为`data_刷卡类型_对应反馈`。
 
-刷卡类型有：
+刷卡类型有（比较感兴趣的进行了加粗）：
 1. **`admin`：宿管卡**
 2. **`user`：本宿舍住户校园卡**
 3. **`stranger`：陌生人校园卡**
@@ -122,20 +122,6 @@ TODO
 
 有太多种可能的刷卡动作，因此选取了感兴趣的11个刷卡动作，用逻辑分析仪获取数据。
 每个数据对应一个动作；有4个通道，对应D1、D0、LED、LOCK。储存在[data文件夹下](/reverse_engineering/data)。
-
-data_admin_
-data_user_success
-data_stranger_fail
-data_touch_num_blank
-data_touch_ok_fail
-data_D1_blank
-data_D0_blank
-data_LED_blank
-data_LOCK_success
-data_D1&user_locked
-data_D0&user_locked
-data_D1&admin_
-data_D0&admin_
 
 ## 实验数据分析
 ### 硬件分析
