@@ -290,6 +290,8 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 
 ![dorm_pcb](/reverse_engineering/README/dorm_pcb.jpg)
 
+STM32f030C8T6主控，丝印为GT23SC5的恩智浦NFC芯片，以及一个Ti ULN2003A 7路反向器，估计用来接收和发送信号线的数据。
+
 ### 6.2. 信号线的基本功能
 
 首先查询制造商[智慧赛宁](http://www.szsnk.com/)的资料，也没有翻到相关的资料，只能自己动手了。
