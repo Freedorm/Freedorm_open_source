@@ -1,7 +1,7 @@
 # 信号线逆向工程实验
 > 说是方便后人进一步研究。
 
-本篇文章为逆向南科大二期宿舍门锁的过程记录，因为整个逆向的过程类似于实验，这里用实验的方式来指导动作和记录结果。
+本篇文章为逆向南科大二期宿舍门锁的过程记录，因为整个逆向的过程类似于实验，所以这里用实验的方式来规划这篇文章。
 
 ---
 
@@ -18,14 +18,14 @@
     - [2.4. 逻辑分析仪的基本功能](#24-逻辑分析仪的基本功能)
   - [3. 实验器材](#3-实验器材)
   - [4. 详细的可执行实验步骤](#4-详细的可执行实验步骤)
-    - [4.1. **硬件准备**](#41-硬件准备)
-    - [4.2. **信号线静态电平测量**](#42-信号线静态电平测量)
-    - [4.3. **信号线动态波形捕获**](#43-信号线动态波形捕获)
-    - [4.4. **特殊信号短接实验**](#44-特殊信号短接实验)
-    - [4.5. **多次刷卡验证**](#45-多次刷卡验证)
-    - [4.6. **LED 和 LOCK 线功能测试**](#46-led-和-lock-线功能测试)
-    - [4.7. **数据存档**](#47-数据存档)
-    - [4.8. **数据分析**](#48-数据分析)
+    - [4.1. 硬件准备](#41-硬件准备)
+    - [4.2. 信号线静态电平测量](#42-信号线静态电平测量)
+    - [4.3. 信号线动态波形捕获](#43-信号线动态波形捕获)
+    - [4.4. 特殊信号短接实验](#44-特殊信号短接实验)
+    - [4.5. 多次刷卡验证](#45-多次刷卡验证)
+    - [4.6. LED 和 LOCK 线功能测试](#46-led-和-lock-线功能测试)
+    - [4.7. 数据存档](#47-数据存档)
+    - [4.8. 数据分析](#48-数据分析)
   - [5. 实验结果](#5-实验结果)
     - [5.1. 信号线电平](#51-信号线电平)
     - [5.2. 逻辑分析仪数据](#52-逻辑分析仪数据)
@@ -35,6 +35,9 @@
     - [6.3. 确定数据传输线的通讯协议](#63-确定数据传输线的通讯协议)
     - [6.4. 确定数据传输和开门的流程](#64-确定数据传输和开门的流程)
     - [6.5. 确定不同刷卡动作下的数据传输线的具体内容](#65-确定不同刷卡动作下的数据传输线的具体内容)
+  - [7. 总结](#7-总结)
+    - [实验结论](#实验结论)
+    - [应用价值](#应用价值)
 
 
 ---
@@ -69,6 +72,7 @@
 
 ### 2.2. 二期宿舍门锁的基本结构
 
+
 二期宿舍门锁的硬件结构设计结合了电子控制与机械操作，主要由以下模块组成：
 
 1. **电子控制模块**  
@@ -86,12 +90,14 @@
 
 3. **通信接口**  
    - 门锁通过一根 8pin 的 PH2.0 排线与外部系统通信
+ - ![二期宿舍门锁](/reverse_engineering/README/dorm_lock.jpg)
 
 ### 2.3. Freedorm桥接板的基本功能
 Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括：
 - **信号隔离与中继**：可以无干扰地截取信号并传递至逻辑分析仪或其他设备。
 - **调试工具支持**：便于分析门锁与门禁控制器之间的信号交互。
 本实验通过 Freedorm 桥接板连接门锁和逻辑分析仪，完成信号采集。
+![Freedorm桥接板](/reverse_engineering/README/freedorm_brifge_pcb.png)
 
 ### 2.4. 逻辑分析仪的基本功能
 逻辑分析仪是一种电子测试工具，用于捕捉和分析数字信号，核心功能包括：
@@ -99,6 +105,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 - **波形分析**：实时显示信号的波形数据，用于解析数据协议。
 - **协议解码**：支持多种通信协议的解析，便于确认信号的时序和逻辑关系。
 本实验使用 Pulseview 作为逻辑分析仪的上位机软件，采集并分析门锁信号线数据。
+![逻辑分析仪](/reverse_engineering/README/logic_analyzer.jpg)
 
 ---
 
@@ -121,7 +128,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 
 ## 4. 详细的可执行实验步骤
 
-### 4.1. **硬件准备**
+### 4.1. 硬件准备
 1. 准备以下器材：
    - **门锁模块**（实验对象）。
    - **Freedorm桥接板**。
@@ -140,7 +147,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 3. 打开电脑上的 **Pulseview 软件**，确认逻辑分析仪已被正确识别。
 
 
-### 4.2. **信号线静态电平测量**
+### 4.2. 信号线静态电平测量
 1. 使用万用表测量信号线的静态电平：
    - 测量 **D1、D0、LED、LOCK** 四根信号线对 GND 的电压值。
    - 记录每根信号线的电平值。
@@ -150,7 +157,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
    - 配置采样率为 **1MHz**，时基为 500ms/格。
 
 
-### 4.3. **信号线动态波形捕获**
+### 4.3. 信号线动态波形捕获
 1. 在 Pulseview 软件中点击 **开始捕获**。
 2. 刷用户门禁卡，观察 D1 和 D0 的波形变化。
 3. 停止捕获并保存波形，命名为 `data_user_success.sr`。
@@ -160,7 +167,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
    - **空白卡** → 命名为 `data_blank_fail.sr`。
 
 
-### 4.4. **特殊信号短接实验**
+### 4.4. 特殊信号短接实验
 1. 准备杜邦线进行短接实验：
    - 使用杜邦线将 **D1 和 GND** 短接，记录门锁是否有反应。
    - 使用杜邦线将 **D0 和 GND** 短接，记录门锁是否有反应。
@@ -171,7 +178,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
    - `data_D0_short.sr`
 
 
-### 4.5. **多次刷卡验证**
+### 4.5. 多次刷卡验证
 1. 按以下组合进行刷卡动作验证：
    - **短接信号线 + 刷用户卡**：例如，短接 D1 和 GND 后刷用户卡。
    - **短接信号线 + 刷宿管卡**：例如，短接 D0 和 GND 后刷宿管卡。
@@ -179,21 +186,21 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
    - `data_D1_user.sr`
    - `data_D0_admin.sr`
 
-### 4.6. **LED 和 LOCK 线功能测试**
+### 4.6. LED 和 LOCK 线功能测试
 1. 刷用户门禁卡，观察以下情况：
    - 捕获 LED 信号，记录是否变为绿色或红色。
    - 捕获 LOCK 信号，记录门锁是否开启。
 2. 刷宿管门禁卡，重复上述实验步骤。
 3. 刷陌生人门禁卡，重复上述实验步骤。
 
-### 4.7. **数据存档**
+### 4.7. 数据存档
 1. 将所有捕获的波形数据保存到指定文件夹（如 `reverse_engineering/data/`）。
 2. 确保所有文件按照命名规则整理：
    - `data_{刷卡动作}_{反馈类型}.sr`
    - 例如：`data_user_success.sr`, `data_stranger_fail.sr`
 
 
-### 4.8. **数据分析**
+### 4.8. 数据分析
 1. 打开 Pulseview 软件，加载捕获的波形数据文件。
 2. 使用以下步骤分析数据：
    - 检查 **D1 和 D0** 的脉冲模式：
@@ -220,7 +227,7 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 
 ### 5.2. 逻辑分析仪数据
 
-通过执行刷卡动作，逻辑分析仪得到[一些数据]()，命名规则为`data_刷卡动作_对应反馈`。
+通过执行刷卡动作，逻辑分析仪得到[一些数据](reverse_engineering/data)，命名规则为`data_刷卡动作_对应反馈`。
 
 刷卡动作有（比较感兴趣的进行了加粗）：
 1. **`admin`：宿管卡**
@@ -279,7 +286,10 @@ Freedorm 桥接板是一款用于信号截取的中间件硬件，功能包括�
 
 ## 6. 实验数据分析
 ### 6.1. 硬件分析
-在真正开始逆向之前，我们需要了解硬件的基本情况，我们来看看用了什么硬件。
+在开始分析数据之前，我们需要了解硬件的基本情况，会对数据分析有所帮助。
+
+![dorm_pcb](/reverse_engineering/README/dorm_pcb.jpg)
+
 ### 6.2. 信号线的基本功能
 
 首先查询制造商[智慧赛宁](http://www.szsnk.com/)的资料，也没有翻到相关的资料，只能自己动手了。
@@ -400,13 +410,14 @@ GPT说这不是一个标准的有规范的通讯协议，而是一种自定义�
 3. 门禁控制器校验信息，如果通过，通过LED和LOCK控制门锁模块的指示灯和电机
 4. 门锁模块执行开门操作
 
+流程细节如下：
 [![](https://mermaid.ink/img/pako:eNqVkk1Lw0AQhv9K2FMFBb3mIEirF6uC3iSXJVnbYJqt-TiICM2pUVoLfhXFggU_iqCloC3UaH-M2U1y8i84GiulLaJ7mlneZ_ad2dlBMlUIEpFJtmyiyySl4oyBc5IuwMljw1JlNY91S1glpqoQCLAp-C8V7nZGNWkqby5RxdbIpyqqNqJjhzfqrFZNsIde6JbhamIUm5NlYppJqlsG1TRifMPBjcMPbpnbZmeNBPNawfGT3z0BPq7wY2hqdnbgZVFgboeV6--eu7yQfPf2YvWAtWF92HxmlVNAgr2i36tzpzkWGXYpClHhPOwVUzNvBSc17XuX4evRID_S1vgq_LIe3ZV-B4ctx0z8PjSank-Bh_RKchHKsErnL13Ho-WlYnDVDZwmOyzBfPlFdyzYnzUM1yvA1_zPJ7tqhY_X4NPv1XjJgaWIqvfBfpsXnC-naBLliJHDqgKLuPNZW0JWluSIhEQIFbKBbc2SkKTvghTbFl3b1mUkWoZNJpFB7UwWiRtYMyGz8wq2-lv8cwtrtk5pP9_9AJF1StY?type=png)](https://mermaid.live/edit#pako:eNqVkk1Lw0AQhv9K2FMFBb3mIEirF6uC3iSXJVnbYJqt-TiICM2pUVoLfhXFggU_iqCloC3UaH-M2U1y8i84GiulLaJ7mlneZ_ad2dlBMlUIEpFJtmyiyySl4oyBc5IuwMljw1JlNY91S1glpqoQCLAp-C8V7nZGNWkqby5RxdbIpyqqNqJjhzfqrFZNsIde6JbhamIUm5NlYppJqlsG1TRifMPBjcMPbpnbZmeNBPNawfGT3z0BPq7wY2hqdnbgZVFgboeV6--eu7yQfPf2YvWAtWF92HxmlVNAgr2i36tzpzkWGXYpClHhPOwVUzNvBSc17XuX4evRID_S1vgq_LIe3ZV-B4ctx0z8PjSank-Bh_RKchHKsErnL13Ho-WlYnDVDZwmOyzBfPlFdyzYnzUM1yvA1_zPJ7tqhY_X4NPv1XjJgaWIqvfBfpsXnC-naBLliJHDqgKLuPNZW0JWluSIhEQIFbKBbc2SkKTvghTbFl3b1mUkWoZNJpFB7UwWiRtYMyGz8wq2-lv8cwtrtk5pP9_9AJF1StY)
 
-对应的逻辑分析仪数据为[data_user2_success.sr](reverse_engineering/data/data_user2_success.sr)：
+对应流程的逻辑分析仪数据为[data_user2_success.sr](reverse_engineering/data/data_user2_success.sr)：
 
 ![data_user2_success](/reverse_engineering/README/data_user2_success.png)
 
-通过分析多次刷卡数据[data_user_6_success.sr](reverse_engineering/data/data_user_6_success.sr)，每一次刷卡成功的数据传输都是一样的，34bit，所以我们可以初步确定这是在传输身份信息。
+通过分析6次重复刷卡数据[data_user_6_success.sr](reverse_engineering/data/data_user_6_success.sr)，每一次刷卡成功的数据传输都是一样的，**共34bit**，所以我们可以初步确定这是在传输身份信息。
 
 更进一步，分析了宿舍三位室友的刷卡数据，其中两位的验证信息只有一位不同，正好两位室友都没有补过卡，所以这两张卡都是开学一起被办理的，点到为止。
 
@@ -415,3 +426,26 @@ GPT说这不是一个标准的有规范的通讯协议，而是一种自定义�
 ### 6.5. 确定不同刷卡动作下的数据传输线的具体内容
 
 由于此次逆向的背景是Freedorm项目，目前为止已经得到想要的东西了，这部分留给对此更加感兴趣的人。
+
+
+## 7. 总结
+
+### 实验结论
+本实验对南科大二期宿舍门锁信号线进行了详细的逆向分析，通过实验和数据验证得出了以下结论：
+
+1. **信号线功能**：
+   - **D1 和 D0**：为数据传输线，分别表示二进制 `1` 和 `0`，采用无时钟、自定义的二进制通信协议，数据以大端序（MSB 优先）传输，单次脉冲宽度为 200~250us，间隔为 2150us。
+   - **LED 和 LOCK**：分别控制门锁的指示灯和电机，LED 提供刷卡结果的状态反馈（绿色/红色），LOCK 控制门锁的开关状态（低电平解锁）。
+
+2. **通讯协议**：
+   - 确定 D1 和 D0 的通信协议是一种非标准、自定义的二进制传输协议，不依赖时钟信号。
+   - 每次刷卡成功传输的数据长度为 **34 位**，包含用户的身份信息。
+
+3. **门锁与门禁控制器的交互流程**：
+   - 门锁模块通过 NFC 读取卡片信息后，将数据通过 D1、D0 发送给门禁控制器。
+   - 门禁控制器完成身份校验后，通过 LED 和 LOCK 返回结果，控制门锁状态。
+
+### 应用价值
+此次实验为进一步研究和改造门锁通信协议提供了基础，为 Freedorm 项目的功能扩展（如蓝牙解锁、远程控制）打下了坚实的技术依据。
+
+实验结论和分析不仅适用于宿舍门锁，也可为其他类似设备的逆向工程提供参考。
